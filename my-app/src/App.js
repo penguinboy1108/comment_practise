@@ -1,6 +1,6 @@
 import './App.scss'
 import avatar from './images/bozai.png'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import _ from 'lodash'
 import classNames from 'classnames'
 import {v4 as uuidV4} from 'uuid'
@@ -103,6 +103,8 @@ const App = () => {
   //发表评论
   const [content, setContent] = useState('')
 
+  const inputRef = useRef(null)
+
   const handlePublish = () => {
     setCommentList([
       ...commentList,
@@ -123,6 +125,7 @@ const App = () => {
     // 清空评论框
     setContent('')
     // 重新聚焦 dom(useRef) - focus
+    inputRef.current.focus()
   }
 
   return (
@@ -164,6 +167,7 @@ const App = () => {
             {/* 评论框 */}
             <textarea
               className="reply-box-textarea"
+              ref={inputRef}
               placeholder="发一条友善的评论"
               value={content}
               onChange={(e) => setContent(e.target.value)}
